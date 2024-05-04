@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="children"></div>
+
+    <script>
+
+        let content = document.querySelector('.children');
+
+        createHTML(content, "div", {
+
+            class: 'container',
+            id: 'container',
+            innerText: 'First Content',
+
+            obj: [
+                children = ["div", {
+                    class: 'blogg',
+                    id: 'span_id',
+
+                    obj: [
+                        children = ["a", {
+                            href: 'youtube.com',
+                            innerText: 'Youtube click here',
+
+                            children: ["span", {
+                                class: 'span bold',
+                                innerText: 'Youtube click here',
+                            }],
+                        }],
+                    ]
+                }],
+                children = ["h1", {
+                    class: 'blogg',
+                    id: 'span_id',
+
+                    obj: [
+                        children = ["a", {
+                            href: 'youtube.com',
+                            innerText: 'Youtube click here',
+
+                            children: ["span", {
+                                class: 'span bold',
+                                innerText: 'Youtube click here',
+                            }],
+                        }],
+                        children = ["span", {
+
+                            onclick: () => {
+                                alert('hehehe siz hozirgina spanni bosdingiz ');
+                            },
+                            innerText: 'Span tag click here',
+                        }],
+                    ]
+                }],
+            ]
+        });
+
+        function createHTML(add, tag, obj) {
+            let c = create(tag);
+
+            for (let a = 0; a < Object.keys(obj).length; a++) {
+
+                if (Object.keys(obj)[a] === "obj") {
+
+                    obj.obj.forEach(function (arr) {
+                        createHTML(c, arr[0], arr[1]);
+                    });
+
+                }
+
+                else if (Object.keys(obj)[a] === "onclick") c.onclick = Object.values(obj)[a];
+                else if (Object.keys(obj)[a] === "innerText") c.innerText = Object.values(obj)[a];
+                else c.setAttribute(Object.keys(obj)[a], Object.values(obj)[a]);
+
+            }
+
+            append(add, c);
+        }
+
+        function create(tag) {
+            let c = document.createElement(tag);
+            return c;
+        }
+        function append(c, tag) {
+            c.append(tag);
+        }
+
+    </script>
+</body>
+
+</html>
